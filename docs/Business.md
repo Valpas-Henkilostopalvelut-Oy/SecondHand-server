@@ -1,11 +1,11 @@
 ### Businesses
 
 - **Create a new business**
-
-  - Endpoint: `POST /businesses`
+  - Endpoint: `POST /api/v1/businesses`
   - Description: Create a new business with the provided details.
+  - Permissions: Authenticated user
+  - Request: `POST /api/v1/businesses`
   - Request Body
-
   ```json
   {
     "customerId": "5a31406e-3e6f-4fcd-a5a3-5700fe76f1d5",
@@ -19,9 +19,7 @@
     ]
   }
   ```
-
   - Response Body (Example - Success)
-
   ```json
   {
     "id": "7a505a01-5d1f-4df0-9410-4bb56a8a971e",
@@ -45,14 +43,11 @@
     "version": 1
   }
   ```
-
 - **Get a list of all businesses**
-
-  - Endpoint: `GET /businesses`
+  - Endpoint: `GET /api/v1/businesses`
   - Description: Retrieve a list of all businesses.
-  - Request Body: N/A
+  - Permissions: Anonymous user, Authenticated user
   - Response Body (Example - Success)
-
   ```json
   [
     {
@@ -76,17 +71,15 @@
       "rowVersion": "AQAAAA==",
       "version": 1
     }
-    // Additional business objects...
+    /api/v1// Additional business objects...
   ]
   ```
-
 - **Get details of a specific business**
-
-  - Endpoint: `GET /businesses/{business_id}`
+  - Endpoint: `GET /api/v1/businesses/{business_id}`
   - Description: Retrieve details of a specific business.
-  - Request: `GET /businesses/{business_id}`
+  - Permissions: Anonymous user, Authenticated user
+  - Request: `GET /api/v1/businesses/{business_id}`
   - Response Body (Example - Success)
-
   ```json
   {
     "id": "7a505a01-5d1f-4df0-9410-4bb56a8a971e",
@@ -110,14 +103,12 @@
     "version": 2
   }
   ```
-
 - **Retrieve opening hours of a specific business**
-
-  - Endpoint: `GET /businesses/{business_id}/openinghours`
+  - Endpoint: `GET /api/v1/businesses/{business_id}/openinghours`
   - Description: Retrieve the opening hours of a specific business.
-  - Request: `GET /businesses/{business_id}/openinghours`
+  - Permissions: Anonymous user, Authenticated user
+  - Request: `GET /api/v1/businesses/{business_id}/openinghours`
   - Response Body (Example - Success)
-
   ```json
   {
     "businessId": "7a505a01-5d1f-4df0-9410-4bb56a8a971e",
@@ -167,14 +158,12 @@
     ]
   }
   ```
-
 - **Retrieve contacts of a specific business**
-
-  - Endpoint: `GET /businesses/{business_id}/contacts`
+  - Endpoint: `GET /api/v1/businesses/{business_id}/contacts`
   - Description: Retrieve the contacts of a specific business.
-  - Request: `GET /businesses/{business_id}/contacts``
+  - Permissions: Anonymous user, Authenticated user
+  - Request: `GET /api/v1/businesses/{business_id}/contacts``
   - Response Body (Example - Success)
-
   ```json
   {
     "businessId": "7a505a01-5d1f-4df0-9410-4bb56a8a971e",
@@ -194,14 +183,12 @@
     ]
   }
   ```
-
 - **Retrieve locations of a specific business**
-
-  - Endpoint: `GET /businesses/{business_id}/locations`
+  - Endpoint: `GET /api/v1/businesses/{business_id}/locations`
   - Description: Retrieve the locations of a specific business.
-  - Request: `GET /businesses/{business_id}/locations``
+  - Permissions: Anonymous user, Authenticated user
+  - Request: `GET /api/v1/businesses/{business_id}/locations``
   - Response Body (Example - Success)
-
   ```json
   {
     "businessId": "7a505a01-5d1f-4df0-9410-4bb56a8a971e",
@@ -231,14 +218,12 @@
     ]
   }
   ```
-
 - **Retrieve categories of a specific business**
-
-  - Endpoint: `GET /businesses/{business_id}/categories`
+  - Endpoint: `GET /api/v1/businesses/{business_id}/categories`
   - Description: Retrieve the categories associated with a specific business.
-  - Request: GET /businesses/{business_id}/categories
+  - Permissions: Anonymous user, Authenticated user
+  - Request: GET /api/v1/businesses/{business_id}/categories
   - Response Body (Example - Success)
-
   ```json
   {
     "businessId": "7a505a01-5d1f-4df0-9410-4bb56a8a971e",
@@ -256,14 +241,12 @@
     ]
   }
   ```
-
 - **Retrieve orders of a specific business**
-
-  - Endpoint: `GET /businesses/{business_id}/orders`
+  - Endpoint: `GET /api/v1/businesses/{business_id}/orders`
   - Description: Retrieve the orders associated with a specific business.
-  - Request: `GET /businesses/{business_id}/orders``
+  - Permissions: Customer business owner or Admin role
+  - Request: `GET /api/v1/businesses/{business_id}/orders``
   - Response Body (Example - Success)
-
   ```json
   {
     "businessId": "7a505a01-5d1f-4df0-9410-4bb56a8a971e",
@@ -289,14 +272,12 @@
     ]
   }
   ```
-
 - **Update business details**
-
-  - Endpoint: `PUT /businesses/{business_id}`
+  - Endpoint: `PUT /api/v1/businesses/{business_id}`
   - Description: Update the details of a specific business.
-  - Request: PUT /businesses/{business_id}
+  - Permissions: Customer business owner or Admin role
+  - Request: PUT /api/v1/businesses/{business_id}
   - Request Body
-
   ```json
   {
     "name": "Updated Business Name",
@@ -309,7 +290,6 @@
     ]
   }
   ```
-
   - Response Body (Example - Success)
 
   ```json
@@ -335,14 +315,12 @@
     "version": 3
   }
   ```
-
 - **Delete a business**
-
-  - Endpoint: `DELETE /businesses/{business_id}`
+  - Endpoint: `DELETE /api/v1/businesses/{business_id}`
   - Description: Delete a specific business.
-  - Request: `DELETE /businesses/{business_id}`
+  - Permissions: Customer business owner or Admin role
+  - Request: `DELETE /api/v1/businesses/{business_id}`
   - Response Body (Example - Success)
-
   ```json
   {
     "message": "Business with ID 7a505a01-5d1f-4df0-9410-4bb56a8a971e has been deleted successfully."

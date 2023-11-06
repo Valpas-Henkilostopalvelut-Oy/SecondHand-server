@@ -1,9 +1,9 @@
 ### Customers
 
 - **Create a new customer**
-  - Endpoint: `POST /customers`
+  - Endpoint: `POST /api/v1/customers`
   - Description: Admin can create user with temp password and email.
-  - Request: `POST /customers`
+  - Request: `POST /api/v1/customers`
   - Request Body
   ```json
   {
@@ -15,9 +15,9 @@
   }
   ```
 - **Get a list of all customers**
-  - Endpoint: `GET /customers`
+  - Endpoint: `GET /api/v1/customers`
   - Description: Retrieve a list of all customers.
-  - Request: GET /customers
+  - Request: GET /api/v1/customers
   - Response Body (Example - Success)
   ```json
   [
@@ -38,9 +38,9 @@
   ]
   ```
 - **Get details of a specific customer**
-  - Endpoint: `GET /customers/{customer_id}`
+  - Endpoint: `GET /api/v1/customers/{customer_id}`
   - Description: Retrieve details of a specific customer.
-  - Request: GET /customers/{customer_id}
+  - Request: GET /api/v1/customers/{customer_id}
   - Response Body (Example - Success)
   ```json
   {
@@ -53,9 +53,9 @@
   ```
 - **Get Details of businesses owned by a specific customer**
 
-  - Endpoint: GET /customers/{customer_id}/businesses
+  - Endpoint: GET /api/v1/customers/{customer_id}/businesses
   - Description: Retrieve the details of businesses owned by a specific customer.
-  - Request: GET /customers/{customer_id}/businesses
+  - Request: GET /api/v1/customers/{customer_id}/businesses
   - Response Body (Example - Success)
 
   ```json
@@ -104,7 +104,7 @@
   ```
 
 - **Get Notes of a specific customer**
-  - Request: `GET /customers/{customer_id}/notes`
+  - Request: `GET /api/v1/customers/{customer_id}/notes`
   - Response Body (Example - Success)
   ```json
   [
@@ -119,7 +119,7 @@
   ]
   ```
 - **Get Orders of a specific customer**
-  - Request: `GET /customers/{customer_id}/orders`
+  - Request: `GET /api/v1/customers/{customer_id}/orders`
   - Response Body (Example - Success)
   ```json
   [
@@ -142,9 +142,9 @@
   ]
   ```
 - **Update customer details**
-  - Endpoint: `PUT /customers/{customer_id}`
+  - Endpoint: `PUT /api/v1/customers/{customer_id}`
   - Description: Update the details of a specific customer.
-  - Request: PUT /customers/{customer_id}
+  - Request: PUT /api/v1/customers/{customer_id}
   - Request Body
   ```json
   {
@@ -165,9 +165,9 @@
   }
   ```
 - **Delete a customer**
-  - Endpoint: `DELETE /customers/{customer_id}`
+  - Endpoint: `DELETE /api/v1/customers/{customer_id}`
   - Description: Delete a specific customer.
-  - Request: DELETE /customers/{customer_id}
+  - Request: DELETE /api/v1/customers/{customer_id}
   - Response Body (Example - Success)
   ```json
   {

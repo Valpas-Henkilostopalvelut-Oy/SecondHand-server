@@ -1,10 +1,10 @@
 ### Orders
 
 - **Create a new order**
-  - Endpoint: `POST /orders`
+  - Endpoint: `POST /api/v1/orders`
   - Description: Create a new order with the provided details.
   - Permissions: Admin role
-  - Request: POST /orders`
+  - Request: POST /api/v1/orders`
   - Request Body
   ```json
   {
@@ -18,10 +18,10 @@
   }
   ```
 - **Get a list of all orders**
-  - Endpoint: `GET /orders`
+  - Endpoint: `GET /api/v1/orders`
   - Description: Retrieve a list of all orders.
   - Permissions: Admin Role
-  - Request: GET /orders
+  - Request: GET /api/v1/orders
   - Response Body (Example - Success)
   ```json
   [
@@ -48,10 +48,10 @@
   ]
   ```
 - **Get details of a specific order**
-  - Endpoint: `GET /orders/{order_id}`
+  - Endpoint: `GET /api/v1/orders/{order_id}`
   - Description: Retrieve details of a specific order.
   - Permissions: Admin Role
-  - Request: GET /orders/{order_id}
+  - Request: GET /api/v1/orders/{order_id}
   - Response Body (Example - Success)
   ```json
   {
@@ -66,9 +66,9 @@
   }
   ```
 - **Update order details**
-  - Endpoint: `PUT /orders/{order_id}`
+  - Endpoint: `PUT /api/v1/orders/{order_id}`
   - Description: Update the details of a specific order.
-  - Permissions: Admin Role - Request: PUT /orders/{order_id}
+  - Permissions: Admin Role - Request: PUT /api/v1/orders/{order_id}
   - Request Body
   ```json
   {
@@ -91,10 +91,10 @@
   }
   ```
 - **Delete an order**
-  - Endpoint: `DELETE /orders/{order_id}`
+  - Endpoint: `DELETE /api/v1/orders/{order_id}`
   - Description: Delete a specific order.
   - Permissions: Admin Role
-  - Request: DELETE /orders/{order_id}
+  - Request: DELETE /api/v1/orders/{order_id}
   - Response Body (Example - Success)
   ```json
   {

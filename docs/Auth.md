@@ -1,7 +1,7 @@
 ### Auth
 
 - **Register a new user**
-  - Endpoint: `POST /auth/register`
+  - Endpoint: `POST /api/v1/auth/register`
   - Description: Register a new user with the provided details.
   - Request body:
   ```json
@@ -20,7 +20,7 @@
   }
   ```
 - **Login**
-  - Endpoint: `POST /auth/login`
+  - Endpoint: `POST /api/v1/auth/login`
   - Description: Authenticate a user and generate a token for subsequent requests.
   - Request body:
   ```json
@@ -36,7 +36,7 @@
   }
   ```
 - **Get user profile**
-  - Endpoint: `GET /auth/profile`
+  - Endpoint: `GET /api/v1/auth/profile`
   - Description: Retrieve the profile of the authenticated user.
   - Request headers:
   ```json
@@ -53,7 +53,7 @@
   }
   ```
 - **Update user profile**
-  - Endpoint: `PUT /auth/profile`
+  - Endpoint: `PUT /api/v1/auth/profile`
   - Description: Update the profile of the authenticated user.
   - Request headers:
   ```json
@@ -77,7 +77,7 @@
   }
   ```
 - **Delete user profile**
-  - Endpoint: `DELETE /auth/profile`
+  - Endpoint: `DELETE /api/v1/auth/profile`
   - Description: Delete the profile of the authenticated user.
   - Request headers:
   ```json

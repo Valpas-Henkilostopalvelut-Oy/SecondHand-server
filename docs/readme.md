@@ -3,7 +3,7 @@ Tables:
     -- Auth
     -- Customers (many business, many orders, one image)
     -- Orders
-    - Locations
+    -- Locations
     - Categories (many businesses, one image)
     - Contacts
     - Ads
