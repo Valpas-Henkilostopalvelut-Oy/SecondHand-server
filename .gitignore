@@ -1,0 +1,76 @@
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.psess
+*.vsp
+*.vshost.*
+*.obj
+*.pdb
+*.cache
+*.ilk
+*.dll
+*.exe
+*.resx
+*.resources
+*.sbr
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+*.tlog
+*.vspscc
+*.vssscc
+*.xap
+*.xaml.cs
+*.csproj.user
+*.userprefs
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+build/
+[Bb]in/
+[Oo]bj/
+
+# Files and folders to ignore
+obj
+bin
+
+# NuGet packages
+*.nupkg
+packages/
+*.nuget.props
+*.nuget.targets
+
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# NCrunch
+_NCrunch_*
+.*crunch*.local.xml
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# TeamCity
+_TeamCity*
+
+# DotCover
+*.dotCover
+
+# AxoCover
+.axoCover/*
+!.axoCover/settings.json
+
+# Coverlet
+coverage*.json
+coverage*.xml
+coverage*.info

@@ -1,0 +1,14 @@
+Tables:
+    -- Businesses (many categories, many locations, many contacts, many notes, one Social, many opentimes, many images)
+    -- Auth
+    -- Customers (many business, many orders, one image)
+    -- Orders
+    - Locations
+    - Categories (many businesses, one image)
+    - Contacts
+    - Ads
+    - Eveluations (one image)
+    - Notes
+    - Socials
+    - Opentimes
+    - Images
