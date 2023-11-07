@@ -1,12 +1,14 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace SecondHand.Domain.Entities
 {
     public class Customers : BaseEntity
     {
-        public string? Name { get; set; }
-        public string Email { get; set; }
+        public required string Name { get; set; }
+        public required string Email { get; set; }
         public string Phone { get; set; }
-        public string Password { get; set; }
-        public byte[] Salt { get; set; }
+        public required string Password { get; set; }
+        public required byte[] Salt { get; set; } 
 
         public string Avatar { get; set; }
         public List<Businesses> Businesses { get; set; }

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Security.Cryptography;
 
 
 namespace SecondHand.Application.Authentification
@@ -72,7 +73,21 @@ namespace SecondHand.Application.Authentification
                 return false;
             }
         }
+
+        // Generate refresh token
+        public string GenerateRefreshToken()
+        {
+            // Генерируем случайную строку для refresh токена
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                byte[] tokenData = new byte[64]; // Выберите подходящую длину токена
+                rng.GetBytes(tokenData);
+                return Convert.ToBase64String(tokenData);
+            }
+        }
+
+
+        // Verify refresh token
+
     }
-
-
 }

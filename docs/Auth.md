@@ -38,6 +38,23 @@
 - **RefreshToken**
   - Endpoint: `POST /api/v1/auth/refresh-token`
   - Description: Refresh the token of the authenticated user.
+- **User update password**
+  - Endpoint: `POST /api/v1/auth/update-password`
+  - Description: Update the password of the authenticated user.
+  - Request body:
+  ```json
+  {
+    "email": "john@mail.com",
+    "oldPassword": "password123",
+    "newPassword": "newpassword123"
+  }
+  ```
+  - Response:
+  ```json
+  {
+    "message": "Password updated successfully."
+  }
+  ```
 - **Get user profile**
   - Endpoint: `GET /api/v1/auth/profile`
   - Description: Retrieve the profile of the authenticated user.

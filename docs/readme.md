@@ -4,7 +4,7 @@ Tables:
     -- Customers (many business, many orders, one image)
     -- Orders
     -- Locations
-    --  Categories (many businesses, one image)
+    -- Categories (many businesses, one image)
     - Contacts
     - Ads
     - Eveluations (one image)

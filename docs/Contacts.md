@@ -143,7 +143,6 @@
   ```
 
 - **Get contacts of a specific business**
-
   - Endpoint: `GET /businesses/{business_id}/contacts`
   - Description: Retrieve the contacts associated with a specific business.
 
