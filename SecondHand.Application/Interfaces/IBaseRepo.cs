@@ -1,4 +1,4 @@
-namespace SecondHand.Domain.Interfaces
+namespace SecondHand.Application.Interfaces
 {
     public interface IBaseRepo<T>
     {

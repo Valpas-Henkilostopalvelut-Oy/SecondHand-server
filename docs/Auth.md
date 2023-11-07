@@ -35,6 +35,9 @@
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
   }
   ```
+- **RefreshToken**
+  - Endpoint: `POST /api/v1/auth/refresh-token`
+  - Description: Refresh the token of the authenticated user.
 - **Get user profile**
   - Endpoint: `GET /api/v1/auth/profile`
   - Description: Retrieve the profile of the authenticated user.

@@ -272,6 +272,18 @@
     ]
   }
   ```
+- **Set business to category**
+  - Endpoint: `POST /api/v1/businesses/{business_id}/categories/{category_id}`
+  - Description: Set a business to a specific category.
+  - Permissions: Admin role
+  - Request: `POST /api/v1/businesses/{business_id}/categories/{category_id}`
+  - Response Body (Example - Success)
+  ```json
+  {
+    "businessId": "7a505a01-5d1f-4df0-9410-4bb56a8a971e",
+    "categoryId": "1a5c8d89-fab3-4814-94a8-7d1875d0c9f3"
+  }
+  ```
 - **Update business details**
   - Endpoint: `PUT /api/v1/businesses/{business_id}`
   - Description: Update the details of a specific business.
