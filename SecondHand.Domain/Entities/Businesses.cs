@@ -1,11 +1,9 @@
-using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace SecondHand.Domain.Entities
 {
     public class Businesses : BaseEntity
     {
-
-        [ForeignKey("Id")]
         public Guid? CustomerId { get; set; }
         public Customers? Customer { get; set; }
 

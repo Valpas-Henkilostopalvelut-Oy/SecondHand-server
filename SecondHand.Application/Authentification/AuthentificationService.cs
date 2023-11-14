@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using SecondHand.Application.Interfaces;
+using SecondHand.Domain.Entities;
 using SecondHand.Domain.Interfaces;
 
 namespace SecondHand.Application.Authentification
@@ -17,26 +18,34 @@ namespace SecondHand.Application.Authentification
             _authHelper = new AuthenticationHelper();
         }
 
-        public async Task<UserAuthentificationResult> LoginAsync(string email, string password)
+        public async Task<AuthResult> LoginAsync(string email, string password)
         {
-            // Проверка наличия пользователя с указанным email
             var customer = await _customers.GetOneByEmail(email);
             if (customer == null)
             {
-                return UserAuthentificationResult.InvalidEmail;
+                return new AuthResult
+                {
+                    Token = null,
+                    ErrorMessage = "User with this email not found"
+                };
             }
 
-            // Проверка пароля
             if (!AuthenticationHelper.VerifyPassword(password, customer.Password, customer.Salt))
             {
-                return UserAuthentificationResult.InvalidPassword;
+                return new AuthResult
+                {
+                    Token = null,
+                    ErrorMessage = "Invalid password"
+                };
             }
 
-            // Генерация токена
-            var token = JWTHelper.GenerateToken(customer.Id.ToString());
+            var token = new JWTHelper(_configuration).GenerateToken(customer.Id.ToString());
 
-            // Генерация refresh-токена
-            var refreshToken = JWTHelper.GenerateRefreshToken();
+            return new AuthResult
+            {
+                Token = token,
+                ErrorMessage = null
+            };
         }
 
         public Task<UserRefreshTokenResult> RefreshTokenAsync(string token, string refreshToken)
@@ -44,14 +53,81 @@ namespace SecondHand.Application.Authentification
             throw new NotImplementedException();
         }
 
-        public Task<UserRegistrationResult> RegisterAsync(string email, string password, string name)
+        public async Task<AuthResult> RegisterAsync(string email, string password, string name)
         {
-            throw new NotImplementedException();
+            var salt = AuthenticationHelper.GenerateSalt();
+            var isEmailExist = _customers.GetOneByEmail(email).Result != null;
+
+            if (isEmailExist)
+            {
+                return new AuthResult
+                {
+                    Token = null,
+                    ErrorMessage = "User with this email already exist"
+                };
+            }
+
+            var hashedPassword = AuthenticationHelper.HashPassword(password, out salt);
+
+            var customer = new Customers
+            {
+                Email = email,
+                Password = hashedPassword,
+                Salt = salt,
+                Name = name,
+                CreatedAt = DateTime.UtcNow,
+                IsDeleted = false,
+                RowVersion = new byte[0],
+                Version = 0
+            };
+
+            await _customers.CreateOne(customer);
+
+            var token = new JWTHelper(_configuration).GenerateToken(customer.Id.ToString());
+
+            return new AuthResult
+            {
+                Token = token,
+                ErrorMessage = null
+            };
         }
 
-        public Task<UserUpdatePasswordResult> UpdatePasswordAsync(string email, string oldPassword, string newPassword)
+        public async Task<AuthResult> UpdatePasswordAsync(string email, string oldPassword, string newPassword)
         {
-            throw new NotImplementedException();
+            var customer = await _customers.GetOneByEmail(email);
+
+            if (customer == null)
+            {
+                return new AuthResult
+                {
+                    Token = null,
+                    ErrorMessage = "User with this email not found"
+                };
+            }
+
+            if (!AuthenticationHelper.VerifyPassword(oldPassword, customer.Password, customer.Salt))
+            {
+                return new AuthResult
+                {
+                    Token = null,
+                    ErrorMessage = "Invalid password"
+                };
+            }
+
+            var salt = AuthenticationHelper.GenerateSalt();
+            var hashedPassword = AuthenticationHelper.HashPassword(newPassword, out salt);
+
+            customer.Password = hashedPassword;
+
+            await _customers.UpdateOne(customer);
+
+            var token = new JWTHelper(_configuration).GenerateToken(customer.Id.ToString());
+
+            return new AuthResult
+            {
+                Token = token,
+                ErrorMessage = null
+            };
         }
     }
 }
