@@ -5,6 +5,7 @@
   </ItemGroup>
 
   <PropertyGroup>
+    <RootNamespace>SecondHand.WebApi</RootNamespace>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>

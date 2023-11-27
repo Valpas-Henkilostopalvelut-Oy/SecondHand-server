@@ -9,10 +9,8 @@
     <PackageReference Include="MongoDB.Driver" Version="2.22.0" />
   </ItemGroup>
 
-  
-
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <RootNamespace>SecondHand.Infrastructure</RootNamespace>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>

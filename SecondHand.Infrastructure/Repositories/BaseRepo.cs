@@ -1,36 +1,49 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 using SecondHand.Domain.Interfaces;
+using SecondHand.Infrastructure.Models;
 
 namespace SecondHand.Infrastructure.Repositories
 {
-    public class BaseRepo<T> : IBaseRepo<T> where T : class
+    public class BaseRepo<T> : IBaseEntity<T> where T : class
     {
-        public Task<T> CreateOne(T entity)
+        private readonly IMongoCollection<T> _collection;
+        public BaseRepo(IOptions<MongoDBSettings> mongoDBSettings)
         {
-            throw new NotImplementedException();
+            MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionURI);
+            IMongoDatabase database = client.GetDatabase(mongoDBSettings.Value.DatabaseName);
+            _collection = database.GetCollection<T>(mongoDBSettings.Value.CollectionName);
         }
 
-        public Task<bool> DeleteOneById(T entity)
+        public async Task<T> Create(T entity)
         {
-            throw new NotImplementedException();
+            await _collection.InsertOneAsync(entity);
+            return entity;
         }
 
-        public Task<IEnumerable<T>> GetAll()
+        public async Task<bool> Delete(T entity)
         {
-            throw new NotImplementedException();
+            FilterDefinition<T> filter = Builders<T>.Filter.Eq("Id", entity);
+            DeleteResult deleteResult = await _collection.DeleteOneAsync(filter);
+            return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
         }
 
-        public Task<T?> GetOneById(Guid id)
+        public async Task<IEnumerable<T>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _collection.Find(_ => true).ToListAsync();
         }
 
-        public Task<T> UpdateOne(T updatedEntity)
+        public async Task<T?> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            FilterDefinition<T> filter = Builders<T>.Filter.Eq("Id", id);
+            return await _collection.Find(filter).FirstOrDefaultAsync();
+        }
+
+        public async Task<T> Update(T updatedEntity)
+        {
+            FilterDefinition<T> filter = Builders<T>.Filter.Eq("Id", updatedEntity);
+            await _collection.ReplaceOneAsync(filter, updatedEntity);
+            return updatedEntity;
         }
     }
 }

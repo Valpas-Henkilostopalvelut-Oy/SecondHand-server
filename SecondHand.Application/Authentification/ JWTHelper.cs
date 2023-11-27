@@ -3,8 +3,6 @@ using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Security.Cryptography;
-
 
 namespace SecondHand.Application.Authentification
 {

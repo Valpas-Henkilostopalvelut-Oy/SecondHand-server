@@ -71,7 +71,7 @@
       "rowVersion": "AQAAAA==",
       "version": 1
     }
-    /api/v1// Additional business objects...
+  // Additional business objects...
   ]
   ```
 - **Get details of a specific business**

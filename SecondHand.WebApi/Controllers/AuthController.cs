@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using SecondHand.Application.Dtos;
 using SecondHand.Application.Interfaces;
 
-namespace SecondHand.Infrastructure.Controllers
+namespace SecondHand.WebApi.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]

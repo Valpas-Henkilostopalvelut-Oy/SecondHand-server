@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Configuration;
+using SecondHand.Application.Dtos;
 using SecondHand.Application.Interfaces;
 using SecondHand.Domain.Entities;
 using SecondHand.Domain.Interfaces;
@@ -81,7 +82,7 @@ namespace SecondHand.Application.Authentification
                 Version = 0
             };
 
-            await _customers.CreateOne(customer);
+            await _customers.Create(customer);
 
             var token = new JWTHelper(_configuration).GenerateToken(customer.Id.ToString());
 
@@ -119,7 +120,7 @@ namespace SecondHand.Application.Authentification
 
             customer.Password = hashedPassword;
 
-            await _customers.UpdateOne(customer);
+            await _customers.Update(customer);
 
             var token = new JWTHelper(_configuration).GenerateToken(customer.Id.ToString());
 

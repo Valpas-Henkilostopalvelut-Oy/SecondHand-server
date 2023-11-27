@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using SecondHand.Application.Authentification;
-
-
+using SecondHand.Application.Dtos;
 
 namespace SecondHand.Application.Interfaces
 {
@@ -15,11 +10,4 @@ namespace SecondHand.Application.Interfaces
         Task<UserRefreshTokenResult> RefreshTokenAsync(string token, string refreshToken);
         Task<AuthResult> UpdatePasswordAsync(string email, string oldPassword, string newPassword);
     }
-
-    public class AuthResult
-    {
-        public string Token { get; set; }
-        public string ErrorMessage { get; set; }
-    }
-
 }
