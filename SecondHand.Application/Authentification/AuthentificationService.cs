@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using SecondHand.Application.Dtos;
 using SecondHand.Application.Interfaces;
 using SecondHand.Domain.Entities;
@@ -9,14 +9,12 @@ namespace SecondHand.Application.Authentification
     public class AuthentificationService : IAuthentificationService
     {
         private readonly ICustomers _customers;
-        private readonly IConfiguration _configuration; // Используется для доступа к настройкам конфигурации
-        private readonly AuthenticationHelper _authHelper;
+        private readonly JwtGenerator _jwtGenerator;
 
-        public AuthentificationService(ICustomers customers, IConfiguration configuration)
+        public AuthentificationService(ICustomers customers, JwtGenerator jwtGenerator)
         {
             _customers = customers;
-            _configuration = configuration;
-            _authHelper = new AuthenticationHelper();
+            _jwtGenerator = jwtGenerator;
         }
 
         public async Task<AuthResult> LoginAsync(string email, string password)
@@ -40,7 +38,7 @@ namespace SecondHand.Application.Authentification
                 };
             }
 
-            var token = new JWTHelper(_configuration).GenerateToken(customer.Id.ToString());
+            var token = _jwtGenerator.GenerateToken(customer);
 
             return new AuthResult
             {
@@ -84,7 +82,7 @@ namespace SecondHand.Application.Authentification
 
             await _customers.Create(customer);
 
-            var token = new JWTHelper(_configuration).GenerateToken(customer.Id.ToString());
+            var token = _jwtGenerator.GenerateToken(customer);
 
             return new AuthResult
             {
@@ -122,7 +120,7 @@ namespace SecondHand.Application.Authentification
 
             await _customers.Update(customer);
 
-            var token = new JWTHelper(_configuration).GenerateToken(customer.Id.ToString());
+            var token = _jwtGenerator.GenerateToken(customer);
 
             return new AuthResult
             {

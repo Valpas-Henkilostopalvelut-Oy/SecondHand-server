@@ -7,8 +7,8 @@ namespace SecondHand.Application.Dtos
 {
     public class CreateBusinessesDTO
     {
-        public Guid CustomerId { get; set; }
-        public string Name { get; set; }
+        public required Guid CustomerId { get; set; }
+        public required string Name { get; set; }
         public string? Description { get; set; }
         public string? WebsiteUrl { get; set; }
         public string? LogoUrl { get; set; }

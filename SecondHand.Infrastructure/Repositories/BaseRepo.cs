@@ -7,12 +7,12 @@ namespace SecondHand.Infrastructure.Repositories
 {
     public class BaseRepo<T> : IBaseEntity<T> where T : class
     {
-        private readonly IMongoCollection<T> _collection;
+        protected readonly IMongoCollection<T> _collection;
         public BaseRepo(IOptions<MongoDBSettings> mongoDBSettings)
         {
             MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionURI);
             IMongoDatabase database = client.GetDatabase(mongoDBSettings.Value.DatabaseName);
-            _collection = database.GetCollection<T>(mongoDBSettings.Value.CollectionName);
+            _collection = database.GetCollection<T>(typeof(T).Name);
         }
 
         public async Task<T> Create(T entity)

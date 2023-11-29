@@ -12,12 +12,12 @@ namespace SecondHand.Infrastructure.Repositories
 {
     public class CustomerRepo : BaseRepo<Customers>, ICustomers
     {
-        private readonly IMongoCollection<Customers> _customers;
+        private IMongoCollection<Customers> _customers;
+
         public CustomerRepo(IOptions<MongoDBSettings> mongoDBSettings) : base(mongoDBSettings)
         {
-            MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionURI);
-            IMongoDatabase database = client.GetDatabase(mongoDBSettings.Value.DatabaseName);
-            _customers = database.GetCollection<Customers>(mongoDBSettings.Value.CollectionName);
+            // Assign the _collection field from the base class to the _customers field
+            _customers = _collection;
         }
 
         public async Task<Customers?> GetOneByEmail(string email)

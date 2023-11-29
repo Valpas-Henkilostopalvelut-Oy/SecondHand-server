@@ -1,6 +1,6 @@
 namespace SecondHand.Domain.Entities
 {
-    public class Socials : BaseEntity
+    public class Socials
     {
         public required Guid BusinessId { get; set; }
         public required Businesses Business { get; set; }

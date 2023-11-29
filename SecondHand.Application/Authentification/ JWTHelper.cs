@@ -1,73 +1,81 @@
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Configuration;
-using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using SecondHand.Domain.Entities;
 
 namespace SecondHand.Application.Authentification
 {
-    public class JWTHelper
+    public class JwtGenerator
     {
-        private readonly IConfiguration _configuration;
-        private readonly SymmetricSecurityKey _key;
+        private readonly JWTSettings _jwtSettings;
 
-        public JWTHelper(IConfiguration configuration)
+        public JwtGenerator(IOptions<JWTSettings> jwtSettings)
         {
-            _configuration = configuration;
-            _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            _jwtSettings = jwtSettings.Value;
         }
 
-        public string GenerateToken(string userId)
+        public string GenerateToken(Customers customer)
         {
-            // Генерация токена, включая информацию о сроке действия
-            DateTime expiration = DateTime.UtcNow.AddHours(168); // Например, токен действителен в течение 1 часа
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
+
             var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, customer.Id.ToString()),
+                new Claim(ClaimTypes.Name, customer.Name),
+                new Claim(ClaimTypes.Email, customer.Email),
+                new Claim(ClaimTypes.Role, customer.Role.ToString())
+            };
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpiration),
+                SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.Aes128CbcHmacSha256),
+                Issuer = _jwtSettings.Issuer, // Set Issuer here
+                Audience = _jwtSettings.Audience // Set Audience here
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+    }
+
+    public class JwtVerifier
+    {
+        private readonly JWTSettings _jwtSettings;
+
+        public JwtVerifier(IOptions<JWTSettings> jwtSettings)
         {
-            new Claim(ClaimTypes.Name, userId),
-            new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(expiration).ToUnixTimeSeconds().ToString())
-        };
-
-            var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                _configuration["Jwt:Issuer"],
-                _configuration["Jwt:Audience"],
-                claims,
-                expires: expiration,
-                signingCredentials: creds
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            _jwtSettings = jwtSettings.Value;
         }
 
         public bool VerifyToken(string token)
         {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
+
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = key,
+                ValidateIssuer = true, // Enable Issuer validation
+                ValidIssuer = _jwtSettings.Issuer, // Set valid Issuer here
+                ValidateAudience = true, // Enable Audience validation
+                ValidAudience = _jwtSettings.Audience // Set valid Audience here
+            };
+
             try
             {
-                var tokenHandler = new JwtSecurityTokenHandler();
-
-                tokenHandler.ValidateToken(token, new TokenValidationParameters
-                {
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    IssuerSigningKey = _key
-                }, out SecurityToken validatedToken);
-
-                var jwtToken = (JwtSecurityToken)validatedToken;
-
-                // Проверка срока действия токена
-                var expiration = jwtToken.ValidTo;
-                if (expiration < DateTime.UtcNow)
-                {
-                    // Токен истек
-                    return false;
-                }
-
+                tokenHandler.ValidateToken(token, tokenValidationParameters, out _);
                 return true;
             }
             catch
             {
-                // Токен недействителен
                 return false;
             }
         }

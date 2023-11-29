@@ -40,6 +40,7 @@ build/
 # Files and folders to ignore
 obj
 bin
+appsettings.json
 
 # NuGet packages
 *.nupkg

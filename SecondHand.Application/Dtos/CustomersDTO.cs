@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SecondHand.Application.Dtos
 {
-    public class CustomerUpdateDto
+    public class UpdateCustomersDTO
     {
         public required string Name { get; set; }
         public required string Email { get; set; }
@@ -13,7 +13,7 @@ namespace SecondHand.Application.Dtos
         public required string Avatar { get; set; }
     }
 
-    public class CustomerCreateDto
+    public class CreateCustomersDTO
     {
         public required string Name { get; set; }
         public required string Email { get; set; }

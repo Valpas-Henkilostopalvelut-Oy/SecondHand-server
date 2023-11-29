@@ -1,6 +1,6 @@
 namespace SecondHand.Application.Interfaces
 {
-    public interface IBaseServices<TEntity, TCreateDto, TUpdateDto, ResultDTO>
+    public interface IBaseService<TEntity, TCreateDto, TUpdateDto, ResultDTO>
     {
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<TEntity> GetByIdAsync(Guid id);

@@ -6,11 +6,11 @@ using SecondHand.Domain.Interfaces;
 
 namespace SecondHand.Application.Services
 {
-    public class BusinessesServices : BaseServices<Businesses, CreateBusinessesDTO, UpdateBusinessesDTO>, IBusinessesServices
+    public class BusinessesService : BaseService<Businesses, CreateBusinessesDTO, UpdateBusinessesDTO>, IBusinessesService
     {
-        private readonly IBaseEntity<Businesses> _repository;
-        private readonly IBaseEntity<Categories> _categoriesRepository;
-        public BusinessesServices(IBaseEntity<Businesses> repository, IMapper mapper, IBaseEntity<Categories> categories) : base(repository, mapper)
+        private readonly IBusinesses _repository;
+        private readonly ICategories _categoriesRepository;
+        public BusinessesService(IBusinesses repository, IMapper mapper, ICategories categories) : base(repository, mapper)
         {
             _repository = repository;
             _categoriesRepository = categories;

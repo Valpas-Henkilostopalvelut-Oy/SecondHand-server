@@ -5,8 +5,6 @@ namespace SecondHand.Domain.Entities
 {
     public class BaseEntity
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
         public Guid Id { get; set; }
         public required DateTime CreatedAt { get; set; }
         public DateTime LastModifiedAt { get; set; }

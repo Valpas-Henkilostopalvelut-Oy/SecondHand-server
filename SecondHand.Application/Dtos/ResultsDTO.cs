@@ -16,7 +16,7 @@ namespace SecondHand.Application.Dtos
         InvalidToken,
         InvalidRefreshToken
     }
-    public enum DeleteDTO
+    public enum ResultDTO
     {
         Success,
         InvalidToken,

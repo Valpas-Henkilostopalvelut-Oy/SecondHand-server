@@ -3,7 +3,7 @@ using SecondHand.Domain.Entities;
 
 namespace SecondHand.Application.Interfaces
 {
-    public interface IBusinessesServices : IBaseServices<Businesses, CreateBusinessesDTO, UpdateBusinessesDTO, ResultDTO>
+    public interface IBusinessesService : IBaseService<Businesses, CreateBusinessesDTO, UpdateBusinessesDTO, ResultDTO>
     {
         // Get business categories
         Task<IEnumerable<Categories>> GetBusinessCategoriesAsync(Guid businessId);

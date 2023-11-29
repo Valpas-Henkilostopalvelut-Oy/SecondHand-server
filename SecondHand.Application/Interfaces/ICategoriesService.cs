@@ -7,11 +7,12 @@ using SecondHand.Domain.Entities;
 
 namespace SecondHand.Application.Interfaces
 {
-    public interface ICategoriesServices : IBaseServices<Categories, CreateCategoriesDTO, UpdateCategoriesDTO>
+    public interface ICategoriesService : IBaseService<Categories, CreateCategoriesDTO, UpdateCategoriesDTO, ResultDTO>
     {
         // Get Businesses on Category
         Task<IEnumerable<Businesses>> GetBusinessesOnCategoryAsync(Guid categoryId);
         // Set Businesses on Category
         Task<ResultDTO> SetBusinessesOnCategoryAsync(Guid categoryId, Guid businessId);
+        Task<ResultDTO> SetCategoryImageAsync(Guid categoryId, string imageUrl);
     }
 }

@@ -5,12 +5,12 @@ using SecondHand.Domain.Interfaces;
 
 namespace SecondHand.Application.Services
 {
-    public class BaseServices<T, TCreateDto, TUpdateDto> : IBaseServices<T, TCreateDto, TUpdateDto, ResultDTO>
+    public class BaseService<T, TCreateDto, TUpdateDto> : IBaseService<T, TCreateDto, TUpdateDto, ResultDTO>
 
     {
         private readonly IBaseEntity<T> _baseEntity;
         protected readonly IMapper _mapper;
-        public BaseServices(IBaseEntity<T> baseEntity, IMapper mapper)
+        public BaseService(IBaseEntity<T> baseEntity, IMapper mapper)
         {
             _baseEntity = baseEntity;
             _mapper = mapper;
@@ -43,14 +43,14 @@ namespace SecondHand.Application.Services
         public async Task<T> GetByIdAsync(Guid id)
         {
             var result = await _baseEntity.GetById(id);
-            return result;
+            return result ?? throw new Exception("Entity not found");
         }
 
         public async Task<T> UpdateAsync(Guid id, TUpdateDto entity)
         {
             var entityMapped = _mapper.Map<T>(entity);
             var result = await _baseEntity.Update(entityMapped);
-            return result;
+            return result ?? throw new Exception("Entity not found");
         }
     }
 }
