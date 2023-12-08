@@ -29,7 +29,7 @@ namespace SecondHand.Application.Services
             {
                 return default;
             }
-            var result = await _baseEntity.Delete(entity);
+            var result = await _baseEntity.SetDeleted(entity);
             var resultMapped = _mapper.Map<ResultDTO>(result);
             return resultMapped;
         }

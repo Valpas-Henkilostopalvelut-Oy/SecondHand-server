@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SecondHand.Application.Dtos;
 using SecondHand.Application.Interfaces;
@@ -48,6 +49,7 @@ namespace SecondHand.WebApi.Controllers
             return Ok(result);
         }
         [HttpPost]
+        
         public async Task<IActionResult> Create([FromBody] CreateCategoriesDTO name)
         {
             var result = await _categories.CreateAsync(name);
@@ -58,6 +60,7 @@ namespace SecondHand.WebApi.Controllers
             return Ok(result);
         }
         [HttpPost("{id}/addBusiness")]
+        
         public async Task<IActionResult> AddBusiness(Guid id, [FromBody] Guid businessId)
         {
             var result = await _categories.SetBusinessesOnCategoryAsync(id, businessId);
@@ -68,6 +71,7 @@ namespace SecondHand.WebApi.Controllers
             return Ok(result);
         }
         [HttpPost("{id}/removeBusiness")]
+        
         public async Task<IActionResult> RemoveBusiness(Guid id, [FromBody] Guid businessId)
         {
             var result = await _categories.RemoveBusinessesOnCategoryAsync(id, businessId);
@@ -78,6 +82,7 @@ namespace SecondHand.WebApi.Controllers
             return Ok(result);
         }
         [HttpPost("{id}/setImage")]
+        
         public async Task<IActionResult> SetImage(Guid id, [FromBody] string imageUrl)
         {
             var result = await _categories.SetCategoryImageAsync(id, imageUrl);
@@ -88,6 +93,7 @@ namespace SecondHand.WebApi.Controllers
             return Ok(result);
         }
         [HttpPut("{id}")]
+        
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateCategoriesDTO name)
         {
             var result = await _categories.UpdateAsync(id, name);
@@ -98,6 +104,7 @@ namespace SecondHand.WebApi.Controllers
             return Ok(result);
         }
         [HttpDelete("{id}")]
+        
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _categories.DeleteAsync(id);

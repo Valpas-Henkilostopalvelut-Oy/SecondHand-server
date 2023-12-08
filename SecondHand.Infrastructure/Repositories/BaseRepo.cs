@@ -21,11 +21,12 @@ namespace SecondHand.Infrastructure.Repositories
             return entity;
         }
 
-        public async Task<bool> Delete(T entity)
+        public async Task<bool> SetDeleted(T entity)
         {
             FilterDefinition<T> filter = Builders<T>.Filter.Eq("Id", entity);
-            DeleteResult deleteResult = await _collection.DeleteOneAsync(filter);
-            return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
+            UpdateDefinition<T> update = Builders<T>.Update.Set("IsDeleted", true);
+            UpdateResult result = await _collection.UpdateOneAsync(filter, update);
+            return result.IsAcknowledged && result.ModifiedCount > 0;
         }
 
         public async Task<IEnumerable<T>> GetAll()
