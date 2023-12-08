@@ -37,5 +37,22 @@ namespace SecondHand.Application.Services
             }
             return customer.Notes!;
         }
+
+        public async Task<ResultDTO> SetNoteOnBusinessAsync(Guid businessId, Guid noteId)
+        {
+            var business = await _businesses.GetById(businessId);
+            if (business == null)
+            {
+                throw new Exception("Business not found");
+            }
+            var note = await _notes.GetById(noteId);
+            if (note == null)
+            {
+                throw new Exception("Note not found");
+            }
+            business.Notes!.Add(note);
+            await _businesses.Update(business);
+            return ResultDTO.Success;
+        }
     }
 }

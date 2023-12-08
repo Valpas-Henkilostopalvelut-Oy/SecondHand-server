@@ -14,5 +14,6 @@ namespace SecondHand.Application.Interfaces
         // Set Businesses on Category
         Task<ResultDTO> SetBusinessesOnCategoryAsync(Guid categoryId, Guid businessId);
         Task<ResultDTO> SetCategoryImageAsync(Guid categoryId, string imageUrl);
+        Task<ResultDTO> RemoveBusinessesOnCategoryAsync(Guid categoryId, Guid businessId);
     }
 }

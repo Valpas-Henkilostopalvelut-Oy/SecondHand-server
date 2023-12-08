@@ -9,5 +9,6 @@ namespace SecondHand.Application.Interfaces
         Task<IEnumerable<Notes>> GetNotesOnBusinessAsync(Guid businessId);
         // Get all notes on customer
         Task<IEnumerable<Notes>> GetNotesOnCustomerAsync(Guid customerId);
+        Task<ResultDTO> SetNoteOnBusinessAsync(Guid businessId, Guid noteId);
     }
 }

@@ -3,8 +3,12 @@ using SecondHand.Infrastructure.Repositories;
 using SecondHand.Application.Interfaces;
 using SecondHand.Application.Authentification;
 using SecondHand.Domain.Interfaces;
+using SecondHand.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add AutoMapper DI
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 // Add services to the container.
 builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));
@@ -15,7 +19,37 @@ builder.Services.Configure<AuthSettings>(builder.Configuration.GetSection("Auth"
 builder.Services.AddSingleton<CustomerRepo>();
 
 // Scoped
-builder.Services.AddScoped<IAuthentificationService, AuthentificationService>().AddScoped<JwtGenerator>().AddScoped<ICustomers, CustomerRepo>();
+builder.Services
+    .AddScoped<JwtGenerator>()
+
+    .AddScoped<ICustomers, CustomerRepo>()
+    .AddScoped<ICustomersService, CustomersService>()
+
+    .AddScoped<IAuthentificationService, AuthentificationService>()
+
+    .AddScoped<IBusinesses, BusinessRepo>()
+    .AddScoped<IBusinessesService, BusinessesService>()
+
+    .AddScoped<IImages, ImageRepo>()
+    .AddScoped<IImagesService, ImagesService>()
+
+    .AddScoped<INotes, NoteRepo>()
+    .AddScoped<INotesService, NotesService>()
+
+    .AddScoped<IOpeningHours, OpeningHoursRepo>()
+    .AddScoped<IOpeningHoursService, OpeningHoursService>()
+
+    .AddScoped<IOrders, OrderRepo>()
+    .AddScoped<IOrdersService, OrdersService>()
+
+    .AddScoped<ISocials, SocialRepo>()
+    .AddScoped<ISocialService, SocialService>()
+
+    .AddScoped<ILocations, LocationRepo>()
+    .AddScoped<ILocationsService, LocationService>()
+
+    .AddScoped<ICategories, CategoryRepo>()
+    .AddScoped<ICategoriesService, CategoriesService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

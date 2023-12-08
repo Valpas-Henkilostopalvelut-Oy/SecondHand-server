@@ -30,6 +30,24 @@ namespace SecondHand.Application.Services
             return businesses.Where(x => x.Categories != null && x.Categories.Any(b => b.Id == categoryId));
         }
 
+        public async Task<ResultDTO> RemoveBusinessesOnCategoryAsync(Guid categoryId, Guid businessId)
+        {
+            var category = await _categories.GetById(categoryId);
+            if (category == null)
+            {
+                throw new Exception("Category not found");
+            }
+            var business = await _businesses.GetById(businessId);
+            if (business == null)
+            {
+                throw new Exception("Business not found");
+            }
+            category.Businesses!.Remove(business);
+            var result = await _categories.Update(category);
+            var resultMapped = _mapper.Map<ResultDTO>(result);
+            return resultMapped;
+        }
+
         public async Task<ResultDTO> SetBusinessesOnCategoryAsync(Guid categoryId, Guid businessId)
         {
             var category = await _categories.GetById(categoryId);
