@@ -21,17 +21,18 @@ namespace SecondHand.Application.Services
         }
         public async Task<IEnumerable<Businesses>> GetBusinessesOnCategoryAsync(Guid categoryId)
         {
+            // many to many relationship between businesses and categories with table BusinessCategories
             var category = await _categories.GetById(categoryId);
             if (category == null)
             {
                 throw new Exception("Category not found");
             }
-            var businesses = await _businesses.GetAll();
-            return businesses.Where(x => x.Categories != null && x.Categories.Any(b => b.Id == categoryId));
+            return category.BusinessCategories!.Select(bc => bc.Business);
         }
 
         public async Task<ResultDTO> RemoveBusinessesOnCategoryAsync(Guid categoryId, Guid businessId)
         {
+            // many to many relationship between businesses and categories with table BusinessCategories
             var category = await _categories.GetById(categoryId);
             if (category == null)
             {
@@ -42,7 +43,7 @@ namespace SecondHand.Application.Services
             {
                 throw new Exception("Business not found");
             }
-            category.Businesses!.Remove(business);
+            category.BusinessCategories!.RemoveAll(bc => bc.BusinessId == businessId);
             var result = await _categories.Update(category);
             var resultMapped = _mapper.Map<ResultDTO>(result);
             return resultMapped;
@@ -50,6 +51,7 @@ namespace SecondHand.Application.Services
 
         public async Task<ResultDTO> SetBusinessesOnCategoryAsync(Guid categoryId, Guid businessId)
         {
+            // many to many relationship between businesses and categories with table BusinessCategories
             var category = await _categories.GetById(categoryId);
             if (category == null)
             {
@@ -60,7 +62,13 @@ namespace SecondHand.Application.Services
             {
                 throw new Exception("Business not found");
             }
-            category.Businesses!.Add(business);
+
+            var businessCategory = new BusinessCategory
+            {
+                BusinessId = businessId,
+                CategoryId = categoryId
+            };
+            category.BusinessCategories!.Add(businessCategory);
             var result = await _categories.Update(category);
             var resultMapped = _mapper.Map<ResultDTO>(result);
             return resultMapped;

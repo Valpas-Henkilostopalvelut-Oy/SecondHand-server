@@ -27,6 +27,7 @@ builder.Services.AddSingleton<CustomerRepo>();
 // Scoped
 builder.Services
     .AddScoped<JwtGenerator>()
+    .AddScoped<JwtVerifier>()
 
     .AddScoped<ICustomers, CustomerRepo>()
     .AddScoped<ICustomersService, CustomersService>()
@@ -39,20 +40,8 @@ builder.Services
     .AddScoped<IImages, ImageRepo>()
     .AddScoped<IImagesService, ImagesService>()
 
-    .AddScoped<INotes, NoteRepo>()
-    .AddScoped<INotesService, NotesService>()
-
-    .AddScoped<IOpeningHours, OpeningHoursRepo>()
-    .AddScoped<IOpeningHoursService, OpeningHoursService>()
-
     .AddScoped<IOrders, OrderRepo>()
     .AddScoped<IOrdersService, OrdersService>()
-
-    .AddScoped<ISocials, SocialRepo>()
-    .AddScoped<ISocialService, SocialService>()
-
-    .AddScoped<ILocations, LocationRepo>()
-    .AddScoped<ILocationsService, LocationService>()
 
     .AddScoped<ICategories, CategoryRepo>()
     .AddScoped<ICategoriesService, CategoriesService>();
@@ -62,13 +51,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.AddSecurityDefinition("oauth2",
-     new OpenApiSecurityScheme
-     {
-         Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
-         Name = "Authentification",
-         In = ParameterLocation.Header,
-     });
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        Description = "Bearer token authentication",
+        Name = "Authentication",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey
+    });
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
@@ -82,13 +71,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("wadssswaaswwfdxveS112")),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("wadssswaaswwfdxveS11wwdcjdieiw2-dwisjsjjw2")),
             ValidateIssuer = true,
             ValidIssuer = "r4nd0m1ssu3rk3y",
             ValidateAudience = true,
             ValidAudience = "r4nd0m4ud13nc3",
         };
     });
+
+builder.Logging.AddConsole();
 
 var app = builder.Build();
 
@@ -101,7 +92,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication(); // Use authentication before authorization
 app.UseAuthorization();
+
+//app.UseMiddleware<ErrorHandlerMiddleware>(); // Add your error handling middleware
 
 app.MapControllers();
 

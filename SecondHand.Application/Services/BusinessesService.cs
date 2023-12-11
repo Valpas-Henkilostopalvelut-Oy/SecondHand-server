@@ -17,13 +17,13 @@ namespace SecondHand.Application.Services
         }
         public async Task<IEnumerable<Categories>> GetBusinessCategoriesAsync(Guid businessId)
         {
+            // many to many relationship between businesses and categories with table BusinessCategories
             var business = await _repository.GetById(businessId);
             if (business == null)
             {
                 throw new Exception("Business not found");
             }
-            var categories = await _categoriesRepository.GetAll();
-            return categories.Where(x => x.Businesses != null && x.Businesses.Any(b => b.Id == businessId));
+            return business.BusinessCategories!.Select(bc => bc.Category);
         }
 
         public async Task<IEnumerable<Contacts>> GetBusinessContactsAsync(Guid businessId)
@@ -78,6 +78,7 @@ namespace SecondHand.Application.Services
 
         public async Task<Businesses> SetBusinessCategoryAsync(Guid businessId, Guid categoryId)
         {
+            // many to many relationship between businesses and categories with table BusinessCategories
             var business = await _repository.GetById(businessId);
             if (business == null)
             {
@@ -88,9 +89,31 @@ namespace SecondHand.Application.Services
             {
                 throw new Exception("Category not found");
             }
-            business.Categories!.Add(category);
-            await _repository.Update(business);
-            return business;
+            var businessCategory = new BusinessCategory
+            {
+                BusinessId = businessId,
+                CategoryId = categoryId,
+                Business = business,
+                Category = category
+            };
+            if (business.BusinessCategories == null)
+            {
+                business.BusinessCategories = new List<BusinessCategory>();
+            }
+            else
+            {
+                business.BusinessCategories.Add(businessCategory);
+            }
+            if (category.BusinessCategories == null)
+            {
+                category.BusinessCategories = new List<BusinessCategory>();
+            }
+            else
+            {
+                category.BusinessCategories.Add(businessCategory);
+            }
+            var result = await _repository.Update(business);
+            return result;
         }
     }
 }

@@ -10,11 +10,18 @@ namespace SecondHand.Application.Authentification
     {
         private readonly ICustomers _customers;
         private readonly JwtGenerator _jwtGenerator;
+        private readonly JwtVerifier _jwtVerifier;
 
-        public AuthentificationService(ICustomers customers, JwtGenerator jwtGenerator)
+        public AuthentificationService(ICustomers customers, JwtGenerator jwtGenerator, JwtVerifier jwtVerifier)
         {
             _customers = customers;
             _jwtGenerator = jwtGenerator;
+            _jwtVerifier = jwtVerifier;
+        }
+
+        public async Task<bool> CheckTokenValidityAsync(string token)
+        {
+            return _jwtVerifier.VerifyToken(token);
         }
 
         public async Task<AuthResult> LoginAsync(string email, string password)

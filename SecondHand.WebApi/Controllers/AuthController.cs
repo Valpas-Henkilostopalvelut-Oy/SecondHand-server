@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SecondHand.Application.Dtos;
 using SecondHand.Application.Interfaces;
@@ -14,7 +15,7 @@ namespace SecondHand.WebApi.Controllers
         {
             _authentificationService = authentificationService;
         }
-
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] AuthentificationDto request)
         {
@@ -26,7 +27,7 @@ namespace SecondHand.WebApi.Controllers
 
             return Ok(result.Token);
         }
-
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegistrationDto request)
         {
@@ -37,6 +38,18 @@ namespace SecondHand.WebApi.Controllers
             }
 
             return Ok(result.Token);
+        }
+        [AllowAnonymous]
+        [HttpPost("verify")]
+        public async Task<IActionResult> Verify([FromBody] string token)
+        {
+            var result = await _authentificationService.CheckTokenValidityAsync(token);
+            if (!result)
+            {
+                return BadRequest("Invalid token");
+            }
+
+            return Ok("Token is valid");
         }
     }
 }

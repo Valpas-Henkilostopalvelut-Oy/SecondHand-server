@@ -1,18 +1,19 @@
 Tables:
 
-- Businesses (many categories, many locations, many contacts, many notes, one Social, many opentimes, many images)
+- Businesses (many categories, many locations, many contacts, many notes, one Social, many opentimes, many images) (own table)
 - Auth
-- Customers (many business, many orders, one image)
-- Orders
+- Customers (many business, many orders, one image) (own table)
+- Orders (many business, one customer) (own table)
 - Locations
-- Categories (many businesses, one image)
+- Categories (many businesses, one image) (own table)
 - Contacts
-- Ads
-- Eveluations (one image)
 - Notes
 - Socials
 - Opentimes
-- Images
+- Images (own table)
+
+- Ads (many businesses, one image) (own table)
+- Eveluations (one image) (own table)
 
 ### File structure
 

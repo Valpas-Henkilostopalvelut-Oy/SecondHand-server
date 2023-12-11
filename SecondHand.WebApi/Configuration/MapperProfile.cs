@@ -17,20 +17,8 @@ namespace SecondHand.WebApi.Configuration
             CreateMap<CreateCategoriesDTO, Categories>();
             CreateMap<UpdateCategoriesDTO, Categories>();
 
-            CreateMap<CreateLocationsDTO, Locations>();
-            CreateMap<UpdateLocationsDTO, Locations>();
-
             CreateMap<CreateImagesDTO, Images>();
             CreateMap<UpdateImagesDTO, Images>();
-
-            CreateMap<CreateOpeningHoursDTO, OpeningHours>();
-            CreateMap<UpdateOpeningHoursDTO, OpeningHours>();
-
-            CreateMap<CreateSocialsDTO, Socials>();
-            CreateMap<UpdateSocialsDTO, Socials>();
-
-            CreateMap<CreateNotesDTO, Notes>();
-            CreateMap<UpdateNotesDTO, Notes>();
 
             CreateMap<CreateOrdersDTO, Orders>();
             CreateMap<UpdateOrdersDTO, Orders>();

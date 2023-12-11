@@ -9,5 +9,6 @@ namespace SecondHand.Application.Interfaces
         Task<AuthResult> LoginAsync(string email, string password);
         Task<UserRefreshTokenResult> RefreshTokenAsync(string token, string refreshToken);
         Task<AuthResult> UpdatePasswordAsync(string email, string oldPassword, string newPassword);
+        Task<bool> CheckTokenValidityAsync(string token);
     }
 }

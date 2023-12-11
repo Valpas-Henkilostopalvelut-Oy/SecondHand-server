@@ -21,7 +21,12 @@ namespace SecondHand.Application.Authentification
         public string GenerateToken(Customers customer)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
+            // Ensure the key is at least 16 bytes long
+            var keyBytes = Encoding.UTF8.GetBytes("wadssswaaswwfdxveS11wwdcjdieiw2-dwisjsjjw2");
+            var key = new SymmetricSecurityKey(keyBytes);
+            var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+
+
 
             var claims = new List<Claim>
             {
@@ -34,10 +39,9 @@ namespace SecondHand.Application.Authentification
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpiration),
-                SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.Aes128CbcHmacSha256),
-                Issuer = _jwtSettings.Issuer, // Set Issuer here
-                Audience = _jwtSettings.Audience // Set Audience here
+                SigningCredentials = signingCredentials,
+                Issuer = "r4nd0m1ssu3rk3y", // Set Issuer here
+                Audience = "r4nd0m4ud13nc3" // Set Audience here
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -57,7 +61,10 @@ namespace SecondHand.Application.Authentification
         public bool VerifyToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
+            // Ensure the key is at least 16 bytes long
+            var keyBytes = Encoding.UTF8.GetBytes("wadssswaaswwfdxveS11wwdcjdieiw2-dwisjsjjw2");
+            var key = new SymmetricSecurityKey(keyBytes);
+
 
             var tokenValidationParameters = new TokenValidationParameters
             {

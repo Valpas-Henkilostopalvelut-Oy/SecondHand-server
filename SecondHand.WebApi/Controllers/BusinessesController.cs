@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SecondHand.Application.Dtos;
 using SecondHand.Application.Interfaces;
-using SecondHand.Domain.Interfaces;
+
 
 namespace SecondHand.WebApi.Controllers
 {
@@ -89,7 +85,6 @@ namespace SecondHand.WebApi.Controllers
             }
             return Ok(result);
         }
-
         [HttpPost("{id}/categories/{categoryId}")]
         public async Task<IActionResult> SetCategory(Guid id, Guid categoryId)
         {
@@ -120,7 +115,7 @@ namespace SecondHand.WebApi.Controllers
             }
             return Ok(result);
         }
-        
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateBusinessesDTO request)
         {
@@ -131,7 +126,7 @@ namespace SecondHand.WebApi.Controllers
             }
             return Ok(result);
         }
-        
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {

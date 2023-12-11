@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SecondHand.Application.Dtos;
 using SecondHand.Application.Interfaces;
@@ -7,6 +8,7 @@ namespace SecondHand.Infrastructure.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    //[Authorize(Roles = "Admin")]
     public class CustomersController : ControllerBase
     {
         private readonly ICustomersService _customers;
