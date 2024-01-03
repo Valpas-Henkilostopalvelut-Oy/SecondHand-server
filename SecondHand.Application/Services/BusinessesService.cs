@@ -1,4 +1,8 @@
+using System.Runtime.Serialization;
+using System.Text;
+using System.Text.Json;
 using AutoMapper;
+using SecondHand.Application.CustomException;
 using SecondHand.Application.Dtos;
 using SecondHand.Application.Interfaces;
 using SecondHand.Domain.Entities;
@@ -10,30 +14,24 @@ namespace SecondHand.Application.Services
     {
         private readonly IBusinesses _repository;
         private readonly ICategories _categoriesRepository;
-        public BusinessesService(IBusinesses repository, IMapper mapper, ICategories categories) : base(repository, mapper)
+        private readonly HttpClient _httpClient;
+
+
+        public BusinessesService(IBusinesses repository, IMapper mapper, ICategories categories, HttpClient httpClient) : base(repository, mapper)
         {
             _repository = repository;
             _categoriesRepository = categories;
-        }
-        public async Task<IEnumerable<Categories>> GetBusinessCategoriesAsync(Guid businessId)
-        {
-            // many to many relationship between businesses and categories with table BusinessCategories
-            var business = await _repository.GetById(businessId);
-            if (business == null)
-            {
-                throw new Exception("Business not found");
-            }
-            return business.BusinessCategories!.Select(bc => bc.Category);
+            _httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<Contacts>> GetBusinessContactsAsync(Guid businessId)
+        public async Task<IEnumerable<Categories>> GetBusinessCategoriesAsync(Guid businessId)
         {
             var business = await _repository.GetById(businessId);
             if (business == null)
             {
-                throw new Exception("Business not found");
+                throw new BusinessNotFoundException($"Business with ID {businessId} not found");
             }
-            return business.Contacts!;
+            return business.Categories ?? Enumerable.Empty<Categories>();
         }
 
         public async Task<IEnumerable<Images>> GetBusinessImagesAsync(Guid businessId)
@@ -41,79 +39,81 @@ namespace SecondHand.Application.Services
             var business = await _repository.GetById(businessId);
             if (business == null)
             {
-                throw new Exception("Business not found");
+                throw new BusinessNotFoundException($"Business with ID {businessId} not found");
             }
-            return null;
-        }
 
-        public async Task<IEnumerable<Locations>> GetBusinessLocationsAsync(Guid businessId)
-        {
-            var business = await _repository.GetById(businessId);
-            if (business == null)
-            {
-                throw new Exception("Business not found");
-            }
-            return business.Locations!;
-        }
-
-        public async Task<IEnumerable<OpeningHours>> GetBusinessOpeningHoursAsync(Guid businessId)
-        {
-            var business = await _repository.GetById(businessId);
-            if (business == null)
-            {
-                throw new Exception("Business not found");
-            }
-            return business.OpeningHours!;
-        }
-
-        public async Task<Socials> GetBusinessSocialsAsync(Guid businessId)
-        {
-            var business = await _repository.GetById(businessId);
-            if (business == null)
-            {
-                throw new Exception("Business not found");
-            }
-            return business.Socials!;
+            return null ?? Enumerable.Empty<Images>();
         }
 
         public async Task<Businesses> SetBusinessCategoryAsync(Guid businessId, Guid categoryId)
         {
-            // many to many relationship between businesses and categories with table BusinessCategories
             var business = await _repository.GetById(businessId);
             if (business == null)
             {
-                throw new Exception("Business not found");
+                throw new BusinessNotFoundException($"Business with ID {businessId} not found");
             }
             var category = await _categoriesRepository.GetById(categoryId);
             if (category == null)
             {
-                throw new Exception("Category not found");
+                throw new CategoryNotFoundException($"Category with ID {categoryId} not found");
             }
-            var businessCategory = new BusinessCategory
+
+            business.Categories ??= new List<Categories>();
+            if (!business.Categories.Contains(category))
             {
-                BusinessId = businessId,
-                CategoryId = categoryId,
-                Business = business,
-                Category = category
-            };
-            if (business.BusinessCategories == null)
-            {
-                business.BusinessCategories = new List<BusinessCategory>();
+                business.Categories.Add(category);
             }
-            else
-            {
-                business.BusinessCategories.Add(businessCategory);
-            }
-            if (category.BusinessCategories == null)
-            {
-                category.BusinessCategories = new List<BusinessCategory>();
-            }
-            else
-            {
-                category.BusinessCategories.Add(businessCategory);
-            }
+
             var result = await _repository.Update(business);
             return result;
         }
+
+        public async Task<Businesses> UpdateBusinessOpeningHoursAsync(UpdateHours updateHours)
+        {
+            var business = await _repository.GetById(updateHours.Id);
+            if (business == null)
+            {
+                throw new BusinessNotFoundException($"Business with ID {updateHours.Id} not found");
+            }
+
+            var requestBody = new
+            {
+                textQuery = updateHours.TextQuery,
+            };
+            var requestContent = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+            _httpClient.DefaultRequestHeaders.Add("X-Goog-Api-Key", "AIzaSyBv_2Gvrz1EsLdA19REeX8jnZx0PA3ZGDY");
+            _httpClient.DefaultRequestHeaders.Add("X-Goog-FieldMask", "*");
+            var response = await _httpClient.PostAsync("https://places.googleapis.com/v1/places:searchText", requestContent);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new GoogleMapsApiException($"Google Maps API returned bad status code: {response.StatusCode}");
+            }
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseData = JsonSerializer.Deserialize<YourResponseType>(responseContent);
+
+
+
+            // Предполагается, что responseData.places[0].regularOpeningHours содержит корректные данные
+            var regularOpeningHours = responseData.places[0].regularOpeningHours;
+            business.OpeningHours = regularOpeningHours;
+
+            var result = await _repository.Update(business);
+
+            var resultMapped = _mapper.Map<Businesses>(result);
+            return resultMapped;
+        }
+    }
+
+    internal class YourResponseType
+    {
+        public List<Places> places { get; set; }
+    }
+
+    public class Places
+    {
+        public string name { get; set; }
+        public string formattedAddress { get; set; }
+        public OpeningHours regularOpeningHours { get; set; }
     }
 }

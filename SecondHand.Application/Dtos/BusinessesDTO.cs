@@ -24,4 +24,9 @@ namespace SecondHand.Application.Dtos
         public string? LogoUrl { get; set; }
         public string[]? Images { get; set; }
     }
+    public class UpdateHours
+    {
+        public Guid Id { get; set; }
+        public string TextQuery { get; set; }
+    }
 }

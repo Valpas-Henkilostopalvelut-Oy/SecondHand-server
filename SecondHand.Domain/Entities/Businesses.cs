@@ -1,5 +1,7 @@
 
 
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace SecondHand.Domain.Entities
 {
     public class Businesses : BaseEntity
@@ -14,14 +16,14 @@ namespace SecondHand.Domain.Entities
         public string[]? Images { get; set; }
 
         //  таблицы
-        public List<OpeningHours>? OpeningHours { get; set; }
+        public OpeningHours? OpeningHours { get; set; }
         public List<Contacts>? Contacts { get; set; }
         public List<Notes>? Notes { get; set; }
         public Socials? Socials { get; set; }
         public List<Locations>? Locations { get; set; }
-
-        public List<BusinessCategory> BusinessCategories { get; set; }
-        public List<BusinessOrder> BusinessOrders { get; set; }
+        [BsonIgnore]
+        public List<Categories> Categories { get; set; }
+        public List<Orders> Orders { get; set; }
     }
 
     public class Socials

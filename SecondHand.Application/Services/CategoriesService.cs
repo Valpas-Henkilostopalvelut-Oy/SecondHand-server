@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using SecondHand.Application.CustomException;
 using SecondHand.Application.Dtos;
 using SecondHand.Application.Interfaces;
 using SecondHand.Domain.Entities;
@@ -25,9 +26,9 @@ namespace SecondHand.Application.Services
             var category = await _categories.GetById(categoryId);
             if (category == null)
             {
-                throw new Exception("Category not found");
+                throw new CategoryNotFoundException($"Category with ID {categoryId} not found");
             }
-            return category.BusinessCategories!.Select(bc => bc.Business);
+            return category.Business;
         }
 
         public async Task<ResultDTO> RemoveBusinessesOnCategoryAsync(Guid categoryId, Guid businessId)
@@ -36,14 +37,15 @@ namespace SecondHand.Application.Services
             var category = await _categories.GetById(categoryId);
             if (category == null)
             {
-                throw new Exception("Category not found");
+                throw new CategoryNotFoundException($"Category with ID {categoryId} not found");
             }
             var business = await _businesses.GetById(businessId);
             if (business == null)
             {
-                throw new Exception("Business not found");
+                throw new BusinessNotFoundException($"Business with ID {businessId} not found");
             }
-            category.BusinessCategories!.RemoveAll(bc => bc.BusinessId == businessId);
+            category.Business!.RemoveAll(bc => bc.Id == businessId);
+            business.Categories!.RemoveAll(bc => bc.Id == categoryId);
             var result = await _categories.Update(category);
             var resultMapped = _mapper.Map<ResultDTO>(result);
             return resultMapped;
@@ -55,20 +57,14 @@ namespace SecondHand.Application.Services
             var category = await _categories.GetById(categoryId);
             if (category == null)
             {
-                throw new Exception("Category not found");
+                throw new CategoryNotFoundException($"Category with ID {categoryId} not found");
             }
             var business = await _businesses.GetById(businessId);
             if (business == null)
             {
-                throw new Exception("Business not found");
+                throw new BusinessNotFoundException($"Business with ID {businessId} not found");
             }
-
-            var businessCategory = new BusinessCategory
-            {
-                BusinessId = businessId,
-                CategoryId = categoryId
-            };
-            category.BusinessCategories!.Add(businessCategory);
+            category.Business!.Add(business);
             var result = await _categories.Update(category);
             var resultMapped = _mapper.Map<ResultDTO>(result);
             return resultMapped;
@@ -79,7 +75,7 @@ namespace SecondHand.Application.Services
             var category = await _categories.GetById(categoryId);
             if (category == null)
             {
-                throw new Exception("Category not found");
+                throw new CategoryNotFoundException($"Category with ID {categoryId} not found");
             }
             category.Image = imageUrl;
             var result = await _categories.Update(category);

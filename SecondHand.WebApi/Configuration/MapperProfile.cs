@@ -10,18 +10,23 @@ namespace SecondHand.WebApi.Configuration
         {
             CreateMap<CreateCustomersDTO, Customers>();
             CreateMap<UpdateCustomersDTO, Customers>();
+            CreateMap<Customers, ResultDTO>();
 
             CreateMap<CreateBusinessesDTO, Businesses>();
             CreateMap<UpdateBusinessesDTO, Businesses>();
+            CreateMap<Businesses, ResultDTO>();
 
             CreateMap<CreateCategoriesDTO, Categories>();
             CreateMap<UpdateCategoriesDTO, Categories>();
+            CreateMap<Categories, ResultDTO>();
 
             CreateMap<CreateImagesDTO, Images>();
             CreateMap<UpdateImagesDTO, Images>();
+            CreateMap<Images, ResultDTO>();
 
             CreateMap<CreateOrdersDTO, Orders>();
             CreateMap<UpdateOrdersDTO, Orders>();
+            CreateMap<Orders, ResultDTO>();
         }
     }
 }

@@ -45,36 +45,7 @@ namespace SecondHand.WebApi.Controllers
             }
             return Ok(result);
         }
-        [HttpGet("{id}/openinghours")]
-        public async Task<IActionResult> GetOpeningHours(Guid id)
-        {
-            var result = await _businesses.GetBusinessOpeningHoursAsync(id);
-            if (result == null)
-            {
-                return NotFound();
-            }
-            return Ok(result);
-        }
-        [HttpGet("{id}/contacts")]
-        public async Task<IActionResult> GetContacts(Guid id)
-        {
-            var result = await _businesses.GetBusinessContactsAsync(id);
-            if (result == null)
-            {
-                return NotFound();
-            }
-            return Ok(result);
-        }
-        [HttpGet("{id}/locations")]
-        public async Task<IActionResult> GetLocations(Guid id)
-        {
-            var result = await _businesses.GetBusinessLocationsAsync(id);
-            if (result == null)
-            {
-                return NotFound();
-            }
-            return Ok(result);
-        }
+
         [HttpGet("{id}/categories")]
         public async Task<IActionResult> GetCategories(Guid id)
         {
@@ -95,20 +66,21 @@ namespace SecondHand.WebApi.Controllers
             }
             return Ok(result);
         }
-        [HttpGet("{id}/images")]
-        public async Task<IActionResult> GetImages(Guid id)
+        [HttpPost("/update-hours")]
+        public async Task<IActionResult> UpdateBusinessOpeningHoursAsync(UpdateHours updateHours)
         {
-            var result = await _businesses.GetBusinessImagesAsync(id);
+            var result = await _businesses.UpdateBusinessOpeningHoursAsync(updateHours);
             if (result == null)
             {
                 return NotFound();
             }
             return Ok(result);
         }
-        [HttpGet("{id}/socials")]
-        public async Task<IActionResult> GetSocials(Guid id)
+
+        [HttpGet("{id}/images")]
+        public async Task<IActionResult> GetImages(Guid id)
         {
-            var result = await _businesses.GetBusinessSocialsAsync(id);
+            var result = await _businesses.GetBusinessImagesAsync(id);
             if (result == null)
             {
                 return NotFound();

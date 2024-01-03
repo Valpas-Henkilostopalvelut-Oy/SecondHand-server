@@ -4,7 +4,7 @@ namespace SecondHand.Domain.Entities
     {
         public required Guid CustomerId { get; set; }
         public required Customers Customer { get; set; }
-        public List<BusinessOrder>? BusinessOrders { get; set; }
+        public List<Businesses>? Businesses { get; set; }
         public required DateTime Date { get; set; }
         public int Status { get; set; }
         public int TotalPrice { get; set; }

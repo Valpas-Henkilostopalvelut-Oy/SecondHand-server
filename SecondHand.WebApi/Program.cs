@@ -24,15 +24,17 @@ builder.Services.Configure<AuthSettings>(builder.Configuration.GetSection("Auth"
 // Singletons
 builder.Services.AddSingleton<CustomerRepo>();
 
+// Регистрация IHttpClientFactory
+builder.Services.AddHttpClient();
+
 // Scoped
 builder.Services
     .AddScoped<JwtGenerator>()
     .AddScoped<JwtVerifier>()
+    .AddScoped<IAuthentificationService, AuthentificationService>()
 
     .AddScoped<ICustomers, CustomerRepo>()
     .AddScoped<ICustomersService, CustomersService>()
-
-    .AddScoped<IAuthentificationService, AuthentificationService>()
 
     .AddScoped<IBusinesses, BusinessRepo>()
     .AddScoped<IBusinessesService, BusinessesService>()
