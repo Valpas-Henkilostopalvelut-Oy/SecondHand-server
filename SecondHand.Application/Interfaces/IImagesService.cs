@@ -3,5 +3,6 @@ using SecondHand.Domain.Entities;
 
 namespace SecondHand.Application.Interfaces
 {
-    public interface IImagesService : IBaseService<Images, CreateImagesDTO, UpdateImagesDTO, ResultDTO> { }
+    public interface IImagesService : IBaseService<Images, ImagesReadDTO, ImagesCreateDTO, ImagesUpdateDTO>
+    { }
 }

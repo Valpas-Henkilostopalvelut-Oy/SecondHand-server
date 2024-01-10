@@ -10,12 +10,10 @@ using SecondHand.Domain.Interfaces;
 
 namespace SecondHand.Application.Services
 {
-    public class ImagesService : BaseService<Images, ImagesReadDTO, ImagesCreateDTO, ImagesUpdateDTO>, IImagesService
+    public class LocationService : BaseService<Locations, LocationsReadDTO, LocationsCreateDTO, LocationsUpdateDTO>, ILocationsService
     {
-        private readonly IImages _baseEntity;
-        public ImagesService(IImages baseEntity, IMapper mapper) : base(baseEntity, mapper)
+        public LocationService(IBaseEntity<Locations> baseEntity, IMapper mapper) : base(baseEntity, mapper)
         {
-            _baseEntity = baseEntity;
         }
     }
 }

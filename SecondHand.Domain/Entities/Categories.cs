@@ -7,7 +7,6 @@ namespace SecondHand.Domain.Entities
         public required string Name { get; set; }
         public string? Description { get; set; }
         public string? Image { get; set; }
-        [BsonIgnore]
-        public List<Businesses>? Business { get; set; }
+        public List<CategoriesBusinesses> CategoriesBusinesses { get; set; } = new List<CategoriesBusinesses>();
     }
 }

@@ -1,29 +1,28 @@
-
-
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace SecondHand.Domain.Entities
 {
     public class Businesses : BaseEntity
     {
-        public required Guid CustomerId { get; set; }
-        public required Customers Customer { get; set; }
+        // One-to-many relationship with Customers
+        public Guid? CustomerId { get; set; }
+        public Customers? Customer { get; set; }
 
-        public required string Name { get; set; }
+        public string Name { get; set; } = null!;
         public string? Description { get; set; }
         public string? WebsiteUrl { get; set; }
         public string? LogoUrl { get; set; }
         public string[]? Images { get; set; }
-
-        //  таблицы
         public OpeningHours? OpeningHours { get; set; }
         public List<Contacts>? Contacts { get; set; }
         public List<Notes>? Notes { get; set; }
         public Socials? Socials { get; set; }
-        public List<Locations>? Locations { get; set; }
-        [BsonIgnore]
-        public List<Categories> Categories { get; set; }
-        public List<Orders> Orders { get; set; }
+
+        public List<LocationBusinesses>? Locations { get; set; }
+        public List<CategoriesBusinesses>? Categories { get; set; }
+        public List<Orders>? Orders { get; set; }
+        public Guid? TypeId { get; set; }
+        public Types? Type { get; set; }
     }
 
     public class Socials
@@ -38,15 +37,15 @@ namespace SecondHand.Domain.Entities
     public class OpeningHours
     {
         public bool OpenNow { get; set; }
-        public List<Period> Periods { get; set; }
-        public List<string> WeekdayDescriptions { get; set; }
-        public List<SpecialDay> SpecialDays { get; set; }
+        public List<Period>? Periods { get; set; }
+        public List<string>? WeekdayDescriptions { get; set; }
+        public List<SpecialDay>? SpecialDays { get; set; }
     }
 
     public class Period
     {
-        public TimeOfDay Open { get; set; }
-        public TimeOfDay Close { get; set; }
+        public TimeOfDay Open { get; set; } = null!;
+        public TimeOfDay Close { get; set; } = null!;
     }
 
     public class TimeOfDay
@@ -54,7 +53,7 @@ namespace SecondHand.Domain.Entities
         public int Day { get; set; }
         public int Hour { get; set; }
         public int Minute { get; set; }
-        public Date Date { get; set; }
+        public Date Date { get; set; } = null!;
     }
 
     public class Date
@@ -66,30 +65,14 @@ namespace SecondHand.Domain.Entities
 
     public class SpecialDay
     {
-        public Date Date { get; set; }
+        public Date Date { get; set; } = null!;
     }
 
-    public class Notes
-    {
-        public required string NoteText { get; set; }
-        public required Guid CustomerId { get; set; }
-        public required Customers Customer { get; set; }
-    }
-    public class Locations
-    {
-        public required string Name { get; set; }
-        public string? Driveto { get; set; }
-        public string? Iframe { get; set; }
-        public required int ZipCode { get; set; }
-        public required string Address { get; set; }
-        public required string City { get; set; }
-        public required string AdminName { get; set; }
-        public required string Country { get; set; }
-    }
+
     public class Contacts
     {
-        public string? ContactName { get; set; }
-        public required string Phone { get; set; }
-        public required string Email { get; set; }
+        public string ContactName { get; set; } = null!;
+        public string? Phone { get; set; }
+        public string? Email { get; set; }
     }
 }

@@ -5,16 +5,24 @@ using System.Threading.Tasks;
 
 namespace SecondHand.Application.Dtos
 {
-    public class UpdateCategoriesDTO
+    public class CategoriesReadDTO
     {
-        public required string Name { get; set; }
-        public required string Description { get; set; }
-        public required string Image { get; set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; } = null!;
+        public string? Description { get; set; }
+        public string? Image { get; set; }
+        public List<CategoriesBusinessesDTO> CategoriesBusinesses { get; set; } = new List<CategoriesBusinessesDTO>();
     }
-
-    public class CreateCategoriesDTO
+    public class CategoriesCreateDTO
     {
-        public required string Name { get; set; }
+        public string Name { get; set; } = null!;
+        public string? Description { get; set; }
+        public string? Image { get; set; }
+    }
+    public class CategoriesUpdateDTO
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; } = null!;
         public string? Description { get; set; }
         public string? Image { get; set; }
     }

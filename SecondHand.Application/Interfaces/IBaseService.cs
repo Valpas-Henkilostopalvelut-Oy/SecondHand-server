@@ -1,11 +1,11 @@
 namespace SecondHand.Application.Interfaces
 {
-    public interface IBaseService<TEntity, TCreateDto, TUpdateDto, ResultDTO>
+    public interface IBaseService<T, TReadDto, TCreateDto, TUpdateDto>
     {
-        Task<IEnumerable<TEntity>> GetAllAsync();
-        Task<TEntity> GetByIdAsync(Guid id);
-        Task<TEntity> CreateAsync(TCreateDto entity);
-        Task<TEntity> UpdateAsync(Guid id, TUpdateDto entity);
-        Task<ResultDTO> DeleteAsync(Guid id);
+        Task<IEnumerable<TReadDto>> GetAll();
+        Task<TReadDto> GetOneById(Guid id);
+        Task<TReadDto> UpdateOneById(Guid id, TUpdateDto updated);
+        Task<bool> DeleteOneById(Guid id);
+        Task<TReadDto> CreateOne(TCreateDto dto);
     }
 }

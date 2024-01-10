@@ -5,28 +5,25 @@ using System.Threading.Tasks;
 
 namespace SecondHand.Application.Dtos
 {
-    public class CustomersReadDTO
+    public class TypesReadDTO
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = null!;
-        public string? Email { get; set; }
-        public string? Phone { get; set; }
+        public string? Description { get; set; }
         public string? Image { get; set; }
         public List<BusinessesReadDTO> Businesses { get; set; } = new List<BusinessesReadDTO>();
     }
-    public class CustomersCreateDTO
+    public class TypesCreateDTO
     {
         public string Name { get; set; } = null!;
-        public string? Email { get; set; }
-        public string? Phone { get; set; }
+        public string? Description { get; set; }
         public string? Image { get; set; }
     }
-    public class CustomersUpdateDTO
+    public class TypesUpdateDTO
     {
         public Guid Id { get; set; }
-        public string Name { get; set; } = null!;
-        public string? Email { get; set; }
-        public string? Phone { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
         public string? Image { get; set; }
     }
 }

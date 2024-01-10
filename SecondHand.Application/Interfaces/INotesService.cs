@@ -7,8 +7,8 @@ using SecondHand.Domain.Entities;
 
 namespace SecondHand.Application.Interfaces
 {
-    public interface ICategoriesService : IBaseService<Categories, CategoriesReadDTO, CategoriesCreateDTO, CategoriesUpdateDTO>
+    public interface INotesService : IBaseService<Notes, NotesReadDTO, NotesCreateDTO, NotesUpdateDTO>
     {
-
+        
     }
 }

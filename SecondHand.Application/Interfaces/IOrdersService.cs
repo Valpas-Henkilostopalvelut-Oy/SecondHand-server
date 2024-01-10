@@ -3,5 +3,7 @@ using SecondHand.Domain.Entities;
 
 namespace SecondHand.Application.Interfaces
 {
-    public interface IOrdersService : IBaseService<Orders, CreateOrdersDTO, UpdateOrdersDTO, ResultDTO> { }
+    public interface IOrdersService : IBaseService<Orders, OrdersReadDTO, OrdersCreateDTO, OrdersUpdateDTO>
+    {
+    }
 }
