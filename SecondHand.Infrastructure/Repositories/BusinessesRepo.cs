@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using SecondHand.Application.Dtos;
 using SecondHand.Domain.Entities;
 using SecondHand.Domain.Interfaces;
 using SecondHand.Infrastructure.Models;
@@ -16,19 +17,21 @@ namespace SecondHand.Infrastructure.Repositories
             _collection = database.GetCollection<Businesses>(typeof(Businesses).Name);
         }
 
-        public Task<Businesses> Create(Businesses entity)
+        public async Task<Businesses> Create(Businesses entity)
         {
-            throw new NotImplementedException();
+            // TODO: Return created entity
+            return await _collection.InsertOneAsync(entity).ContinueWith(task => entity);
         }
 
-        public Task<IEnumerable<Businesses>> GetAll()
+        public async Task<IEnumerable<Businesses>> GetAll()
         {
-            throw new NotImplementedException();
+            // TODO: Return all entities
+            return await _collection.Find(_ => true).ToListAsync();
         }
 
-        public Task<Businesses?> GetById(Guid id)
+        public async Task<Businesses?> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return await _collection.Find(entity => entity.Id == id).FirstOrDefaultAsync();
         }
 
         public Task<Businesses> Update(Guid id, Businesses updatedEntity)
