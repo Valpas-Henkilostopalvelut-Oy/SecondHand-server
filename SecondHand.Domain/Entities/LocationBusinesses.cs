@@ -1,6 +1,6 @@
 namespace SecondHand.Domain.Entities
 {
-    public class LocationBusinesses
+    public class LocationBusinesses : BaseEntity
     {
         public Guid LocationId { get; set; }
         public Guid BusinessId { get; set; }

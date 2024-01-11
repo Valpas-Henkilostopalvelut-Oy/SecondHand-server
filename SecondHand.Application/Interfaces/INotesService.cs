@@ -7,7 +7,7 @@ using SecondHand.Domain.Entities;
 
 namespace SecondHand.Application.Interfaces
 {
-    public interface INotesService : IBaseService<Notes, NotesReadDTO, NotesCreateDTO, NotesUpdateDTO>
+    public interface INotesService : IBaseService<Notes, NotesCreateDTO, NotesUpdateDTO>
     {
         
     }

@@ -12,15 +12,15 @@ namespace SecondHand.WebApi.Controllers
     [Route("api/[controller]s")]
     public class CrudController<T, TCreateDto, TUpdateDto> : ControllerBase
     {
-        private readonly IBaseService<T, TCreateDto, TUpdateDto, ResultDTO> _entity;
-        public CrudController(IBaseService<T, TCreateDto, TUpdateDto, ResultDTO> entity)
+        private readonly IBaseService<T, TCreateDto, TUpdateDto> _entity;
+        public CrudController(IBaseService<T, TCreateDto, TUpdateDto> entity)
         {
             _entity = entity;
         }
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] TCreateDto request)
         {
-            var result = await _entity.CreateAsync(request);
+            var result = await _entity.CreateOne(request);
             if (result == null)
             {
                 return BadRequest(result);
@@ -30,7 +30,7 @@ namespace SecondHand.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _entity.GetAllAsync();
+            var result = await _entity.GetAll();
             if (result == null)
             {
                 return NotFound();
@@ -40,7 +40,7 @@ namespace SecondHand.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var result = await _entity.GetByIdAsync(id);
+            var result = await _entity.GetOneById(id);
             if (result == null)
             {
                 return NotFound();
@@ -50,7 +50,7 @@ namespace SecondHand.WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] TUpdateDto request)
         {
-            var result = await _entity.UpdateAsync(id, request);
+            var result = await _entity.UpdateOneById(id, request);
             if (result == null)
             {
                 return BadRequest(result);
@@ -60,7 +60,7 @@ namespace SecondHand.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var result = await _entity.DeleteAsync(id);
+            var result = await _entity.DeleteOneById(id);
             if (result == null)
             {
                 return BadRequest(result);

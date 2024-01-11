@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SecondHand.Domain.Entities
 {
-    public class CategoriesBusinesses
+    public class CategoriesBusinesses : BaseEntity
     {
         public Guid CategoryId { get; set; }
         public Guid BusinessId { get; set; }

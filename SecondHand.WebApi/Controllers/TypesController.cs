@@ -11,13 +11,12 @@ namespace SecondHand.WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class OrdersController : CrudController<Orders, OrdersCreateDTO, OrdersUpdateDTO>
+    public class TypesController : CrudController<Types, TypesCreateDTO, TypesUpdateDTO>
     {
-        private readonly IOrdersService _orders;
-        public OrdersController(IOrdersService orders) : base(orders)
+        private readonly ITypesService _types;
+        public TypesController(ITypesService types) : base(types)
         {
-            _orders = orders;
+            _types = types;
         }
-
     }
 }

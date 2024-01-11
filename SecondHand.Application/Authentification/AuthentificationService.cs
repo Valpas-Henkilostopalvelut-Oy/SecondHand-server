@@ -125,7 +125,7 @@ namespace SecondHand.Application.Authentification
 
             customer.Password = hashedPassword;
 
-            await _customers.Update(customer);
+            await _customers.Update(customer.Id, customer);
 
             var token = _jwtGenerator.GenerateToken(customer);
 

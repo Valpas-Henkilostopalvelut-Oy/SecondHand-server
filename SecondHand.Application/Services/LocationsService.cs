@@ -10,17 +10,17 @@ using SecondHand.Domain.Interfaces;
 
 namespace SecondHand.Application.Services
 {
-    public class OrdersService : IOrdersService
+    public class LocationsService : ILocationsService
     {
-        private readonly IOrders _orders;
+        private readonly ILocations _locations;
         private readonly IMapper _mapper;
-        public OrdersService(IOrders orders, IMapper mapper)
+        public LocationsService(ILocations locations, IMapper mapper)
         {
-            _orders = orders;
+            _locations = locations;
             _mapper = mapper;
         }
 
-        public Task<Orders> CreateOne(OrdersCreateDTO dto)
+        public Task<Locations> CreateOne(LocationsCreateDTO dto)
         {
             throw new NotImplementedException();
         }
@@ -30,17 +30,17 @@ namespace SecondHand.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Orders>> GetAll()
+        public Task<IEnumerable<Locations>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Orders> GetOneById(Guid id)
+        public Task<Locations> GetOneById(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Orders> UpdateOneById(Guid id, OrdersUpdateDTO updated)
+        public Task<Locations> UpdateOneById(Guid id, LocationsUpdateDTO updated)
         {
             throw new NotImplementedException();
         }

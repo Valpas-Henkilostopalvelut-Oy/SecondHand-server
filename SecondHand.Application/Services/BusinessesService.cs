@@ -10,12 +10,39 @@ using SecondHand.Domain.Interfaces;
 
 namespace SecondHand.Application.Services
 {
-    public class BusinessesService : BaseService<Businesses, BusinessesReadDTO, BusinessesCreateDTO, BusinessesUpdateDTO>, IBusinessesService
+    public class BusinessesService : IBusinessesService
     {
         private readonly IBusinesses _businesses;
-        public BusinessesService(IBusinesses businesses, IMapper mapper) : base(businesses, mapper)
+        private readonly IMapper _mapper;
+        public BusinessesService(IBusinesses businesses, IMapper mapper)
         {
             _businesses = businesses;
+            _mapper = mapper;
+        }
+
+        public Task<Businesses> CreateOne(BusinessesCreateDTO dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteOneById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Businesses>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Businesses> GetOneById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Businesses> UpdateOneById(Guid id, BusinessesUpdateDTO updated)
+        {
+            throw new NotImplementedException();
         }
     }
 

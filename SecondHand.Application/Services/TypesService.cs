@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using SecondHand.Application.Dtos;
 using SecondHand.Application.Interfaces;
@@ -10,17 +6,17 @@ using SecondHand.Domain.Interfaces;
 
 namespace SecondHand.Application.Services
 {
-    public class OrdersService : IOrdersService
+    public class TypesService : ITypesService
     {
-        private readonly IOrders _orders;
+        private readonly ITypes _types;
         private readonly IMapper _mapper;
-        public OrdersService(IOrders orders, IMapper mapper)
+        public TypesService(ITypes types, IMapper mapper)
         {
-            _orders = orders;
+            _types = types;
             _mapper = mapper;
         }
 
-        public Task<Orders> CreateOne(OrdersCreateDTO dto)
+        public Task<Types> CreateOne(TypesCreateDTO dto)
         {
             throw new NotImplementedException();
         }
@@ -30,17 +26,17 @@ namespace SecondHand.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Orders>> GetAll()
+        public Task<IEnumerable<Types>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Orders> GetOneById(Guid id)
+        public Task<Types> GetOneById(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Orders> UpdateOneById(Guid id, OrdersUpdateDTO updated)
+        public Task<Types> UpdateOneById(Guid id, TypesUpdateDTO updated)
         {
             throw new NotImplementedException();
         }

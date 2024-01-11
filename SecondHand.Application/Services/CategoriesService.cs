@@ -11,13 +11,39 @@ using SecondHand.Domain.Interfaces;
 
 namespace SecondHand.Application.Services
 {
-    public class CategoriesService : BaseService<Categories, CategoriesReadDTO, CategoriesCreateDTO, CategoriesUpdateDTO>, ICategoriesService
+    public class CategoriesService : ICategoriesService
     {
         private readonly ICategories _categories;
-        public CategoriesService(ICategories categories, IMapper mapper) : base(categories, mapper)
+        private readonly IMapper _mapper;
+        public CategoriesService(ICategories categories, IMapper mapper)
         {
             _categories = categories;
+            _mapper = mapper;
         }
 
+        public Task<Categories> CreateOne(CategoriesCreateDTO dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteOneById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Categories>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Categories> GetOneById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Categories> UpdateOneById(Guid id, CategoriesUpdateDTO updated)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

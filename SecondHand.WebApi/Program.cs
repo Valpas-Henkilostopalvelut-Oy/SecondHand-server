@@ -21,9 +21,6 @@ builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("Mo
 builder.Services.Configure<JWTSettings>(builder.Configuration.GetSection("Jwt"));
 builder.Services.Configure<AuthSettings>(builder.Configuration.GetSection("Auth"));
 
-// Singletons
-builder.Services.AddSingleton<CustomerRepo>();
-
 // Регистрация IHttpClientFactory
 builder.Services.AddHttpClient();
 
@@ -33,20 +30,32 @@ builder.Services
     .AddScoped<JwtVerifier>()
     .AddScoped<IAuthentificationService, AuthentificationService>()
 
-    .AddScoped<ICustomers, CustomerRepo>()
-    .AddScoped<ICustomersService, CustomersService>()
-
-    .AddScoped<IBusinesses, BusinessRepo>()
+    .AddScoped<IBusinesses, BusinessesRepo>()
     .AddScoped<IBusinessesService, BusinessesService>()
 
-    .AddScoped<IImages, ImageRepo>()
+    .AddScoped<ICategoriesBusinesses, CategoriesBusinessesRepo>()
+
+    .AddScoped<ICategories, CategoriesRepo>()
+    .AddScoped<ICategoriesService, CategoriesService>()
+
+    .AddScoped<ICustomers, CustomersRepo>()
+    .AddScoped<ICustomersService, CustomersService>()
+
+    .AddScoped<IImages, ImagesRepo>()
     .AddScoped<IImagesService, ImagesService>()
 
-    .AddScoped<IOrders, OrderRepo>()
+    .AddScoped<ILocationBusinesses, LocationBusinessesRepo>()
+
+    .AddScoped<ILocations, LocationsRepo>()
+    .AddScoped<ILocationsService, LocationsService>()
+
+    .AddScoped<IOrders, OrdersRepo>()
     .AddScoped<IOrdersService, OrdersService>()
 
-    .AddScoped<ICategories, CategoryRepo>()
-    .AddScoped<ICategoriesService, CategoriesService>();
+    .AddScoped<ITypes, TypesRepo>()
+    .AddScoped<ITypesService, TypesService>();
+
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -4,7 +4,7 @@ using SecondHand.Domain.Entities;
 
 namespace SecondHand.Application.Interfaces
 {
-    public interface ILocationsService : IBaseService<Locations, LocationsReadDTO, LocationsCreateDTO, LocationsUpdateDTO>
+    public interface ILocationsService : IBaseService<Locations, LocationsCreateDTO, LocationsUpdateDTO>
     {
 
     }
